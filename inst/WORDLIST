@@ -1,9 +1,16 @@
+BCD
+BDICT
 BOM
 DeepWiki
 IDF
 Jaccard
 Jieba
+Northriven
 POS
+QCEL
+QPYD
+SCEL
+Stopwords
 TF
 TextRank
 cppjieba
@@ -16,4 +23,6 @@ pak
 qinwf
 qmax
 reimplementation
+stopword
+stopwords
 一

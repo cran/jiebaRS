@@ -1,6 +1,6 @@
 Package: jiebaRS
 Title: Chinese Text Segmentation, POS Tagging, and Keyword Extraction
-Version: 0.2.0
+Version: 0.3.0
 Authors@R: 
     c(person(given = "Hao",
              family = "Cheng",
@@ -17,18 +17,19 @@ URL: https://yousa-mirage.github.io/jiebaRS/,
         https://github.com/Yousa-Mirage/jiebaRS
 BugReports: https://github.com/Yousa-Mirage/jiebaRS/issues
 Encoding: UTF-8
+LazyData: true
 Config/rextendr/version: 0.5.0
-SystemRequirements: Cargo (Rust's package manager), rustc >= 1.65.0, xz
+SystemRequirements: Cargo (Rust's package manager), rustc >= 1.85.0, xz
 Depends: R (>= 4.2)
 Imports: cli, rlang
 Suggests: pkgdown, rmarkdown, spelling, testthat (>= 3.0.0), withr
 Config/testthat/edition: 3
 Config/testthat/parallel: true
 Language: en-US
-Config/roxygen2/version: 8.0.0
+Config/roxygen2/version: 8.1.0
 NeedsCompilation: yes
-Packaged: 2026-07-21 03:00:53 UTC; Yousa-Mirage
+Packaged: 2026-08-26 11:17:04 UTC; Yousa-Mirage
 Author: Hao Cheng [aut, cre, cph]
 Maintainer: Hao Cheng <Yousa-Mirage@foxmail.com>
 Repository: CRAN
-Date/Publication: 2026-08-04 16:20:13 UTC
+Date/Publication: 2026-08-26 11:40:02 UTC

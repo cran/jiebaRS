@@ -1,3 +1,4 @@
+mod cidian;
 mod file_reader;
 mod keywords;
 mod segment;
@@ -5,8 +6,8 @@ mod tag;
 mod user_dict;
 mod worker;
 
-use extendr_api::prelude::*;
 use extendr_api::Result;
+use extendr_api::prelude::*;
 use worker::{JiebaWorker, WorkerConfig};
 
 /// Create an internal native jieba worker.
@@ -35,6 +36,7 @@ use worker::{JiebaWorker, WorkerConfig};
 ///   the native worker.
 ///
 /// @return A native `JiebaWorker` handle.
+/// @noRd
 /// @keywords internal
 #[extendr]
 #[allow(clippy::too_many_arguments)]
@@ -71,6 +73,7 @@ fn new_worker(
 ///   constructor.
 ///
 /// @return A character vector of segmented tokens.
+/// @noRd
 /// @keywords internal
 #[extendr]
 fn segment_worker(text: &str, worker: &JiebaWorker) -> Result<Strings> {
@@ -87,6 +90,7 @@ fn segment_worker(text: &str, worker: &JiebaWorker) -> Result<Strings> {
 ///   constructor.
 ///
 /// @return A list of character vectors, one per input string.
+/// @noRd
 /// @keywords internal
 #[extendr]
 fn segment_batch_worker(texts: Strings, worker: &JiebaWorker) -> Result<List> {
@@ -107,6 +111,7 @@ fn segment_batch_worker(texts: Strings, worker: &JiebaWorker) -> Result<List> {
 ///   constructor.
 ///
 /// @return A named list with `term` and `tag` vectors.
+/// @noRd
 /// @keywords internal
 #[extendr]
 fn tagging_worker(text: &str, worker: &JiebaWorker) -> Result<List> {
@@ -127,6 +132,7 @@ fn tagging_worker(text: &str, worker: &JiebaWorker) -> Result<List> {
 ///
 /// @return A list where each element is a named list with `term` and `tag`
 ///   vectors.
+/// @noRd
 /// @keywords internal
 #[extendr]
 fn tagging_batch_worker(texts: Strings, worker: &JiebaWorker) -> Result<List> {
@@ -151,6 +157,7 @@ fn tagging_batch_worker(texts: Strings, worker: &JiebaWorker) -> Result<List> {
 ///   constructor.
 ///
 /// @return A named list with `keyword` and `weight` vectors.
+/// @noRd
 /// @keywords internal
 #[extendr]
 fn keywords_worker(text: &str, worker: &JiebaWorker) -> Result<List> {
@@ -171,6 +178,7 @@ fn keywords_worker(text: &str, worker: &JiebaWorker) -> Result<List> {
 ///   constructor.
 ///
 /// @return A named list with `keyword` and `weight` vectors.
+/// @noRd
 /// @keywords internal
 #[extendr]
 fn textrank_worker(text: &str, worker: &JiebaWorker) -> Result<List> {
@@ -192,6 +200,7 @@ fn textrank_worker(text: &str, worker: &JiebaWorker) -> Result<List> {
 /// @param freq Optional integer vector of frequencies aligned with `words`.
 ///
 /// @return `NULL`, invisibly, after the worker has been updated.
+/// @noRd
 /// @keywords internal
 #[extendr]
 fn add_user_words(
@@ -201,6 +210,50 @@ fn add_user_words(
     freq: Nullable<Integers>,
 ) -> Result<()> {
     worker.add_user_words(&words, &tags, &freq)
+}
+
+/// Import an input-method dictionary into an existing native jieba worker.
+///
+/// Internal bridge used by `import_cidian()` to parse a supported input-method
+/// dictionary and add its words to an existing worker.
+///
+/// @param worker A mutable native `JiebaWorker` handle.
+/// @param path Character scalar containing the input-method dictionary path.
+/// @param format Character scalar identifying the parser to use.
+/// @param tag Optional character scalar containing the tag assigned to every
+///   imported word. `NULL` leaves the tag empty.
+///
+/// @return `NULL`, invisibly, after the worker has been updated.
+/// @noRd
+/// @keywords internal
+#[extendr]
+fn import_cidian_worker(
+    worker: &mut JiebaWorker,
+    path: &str,
+    format: &str,
+    tag: Option<&str>,
+) -> Result<()> {
+    worker.import_cidian(path, format, tag)
+}
+
+/// Read an input-method dictionary through the internal native bridge.
+///
+/// Internal bridge used by `read_cidian()` to parse a supported input-method
+/// dictionary and return its entries and coding components.
+///
+/// @param path Character scalar containing the input-method dictionary path.
+/// @param format Character scalar identifying the parser to use.
+///
+/// @return A named list with `entry` and `code` character vectors.
+/// @noRd
+/// @keywords internal
+#[extendr]
+fn read_cidian_worker(path: &str, format: &str) -> Result<List> {
+    let (entries, codes) = cidian::read_cidian(path, format)?;
+    Ok(list!(
+        entry = Strings::from_values(entries),
+        code = Strings::from_values(codes)
+    ))
 }
 
 extendr_module! {
@@ -215,4 +268,6 @@ extendr_module! {
     fn textrank_worker;
 
     fn add_user_words;
+    fn import_cidian_worker;
+    fn read_cidian_worker;
 }

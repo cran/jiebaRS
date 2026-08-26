@@ -31,6 +31,7 @@ NULL
 #'   the native worker.
 #'
 #' @return A native `JiebaWorker` handle.
+#' @noRd
 #' @keywords internal
 new_worker <- function(worker_type, use_hmm, hmm_model, idf_path, dict_path, user_paths, top_n, min_keyword_length, stop_words) .Call(wrap__new_worker, worker_type, use_hmm, hmm_model, idf_path, dict_path, user_paths, top_n, min_keyword_length, stop_words)
 
@@ -43,6 +44,7 @@ new_worker <- function(worker_type, use_hmm, hmm_model, idf_path, dict_path, use
 #'   constructor.
 #'
 #' @return A character vector of segmented tokens.
+#' @noRd
 #' @keywords internal
 segment_worker <- function(text, worker) .Call(wrap__segment_worker, text, worker)
 
@@ -55,6 +57,7 @@ segment_worker <- function(text, worker) .Call(wrap__segment_worker, text, worke
 #'   constructor.
 #'
 #' @return A list of character vectors, one per input string.
+#' @noRd
 #' @keywords internal
 segment_batch_worker <- function(texts, worker) .Call(wrap__segment_batch_worker, texts, worker)
 
@@ -67,6 +70,7 @@ segment_batch_worker <- function(texts, worker) .Call(wrap__segment_batch_worker
 #'   constructor.
 #'
 #' @return A named list with `term` and `tag` vectors.
+#' @noRd
 #' @keywords internal
 tagging_worker <- function(text, worker) .Call(wrap__tagging_worker, text, worker)
 
@@ -80,6 +84,7 @@ tagging_worker <- function(text, worker) .Call(wrap__tagging_worker, text, worke
 #'
 #' @return A list where each element is a named list with `term` and `tag`
 #'   vectors.
+#' @noRd
 #' @keywords internal
 tagging_batch_worker <- function(texts, worker) .Call(wrap__tagging_batch_worker, texts, worker)
 
@@ -93,6 +98,7 @@ tagging_batch_worker <- function(texts, worker) .Call(wrap__tagging_batch_worker
 #'   constructor.
 #'
 #' @return A named list with `keyword` and `weight` vectors.
+#' @noRd
 #' @keywords internal
 keywords_worker <- function(text, worker) .Call(wrap__keywords_worker, text, worker)
 
@@ -106,6 +112,7 @@ keywords_worker <- function(text, worker) .Call(wrap__keywords_worker, text, wor
 #'   constructor.
 #'
 #' @return A named list with `keyword` and `weight` vectors.
+#' @noRd
 #' @keywords internal
 textrank_worker <- function(text, worker) .Call(wrap__textrank_worker, text, worker)
 
@@ -120,7 +127,37 @@ textrank_worker <- function(text, worker) .Call(wrap__textrank_worker, text, wor
 #' @param freq Optional integer vector of frequencies aligned with `words`.
 #'
 #' @return `NULL`, invisibly, after the worker has been updated.
+#' @noRd
 #' @keywords internal
 add_user_words <- function(worker, words, tags, freq) .Call(wrap__add_user_words, worker, words, tags, freq)
+
+#' Import an input-method dictionary into an existing native jieba worker.
+#'
+#' Internal bridge used by `import_cidian()` to parse a supported input-method
+#' dictionary and add its words to an existing worker.
+#'
+#' @param worker A mutable native `JiebaWorker` handle.
+#' @param path Character scalar containing the input-method dictionary path.
+#' @param format Character scalar identifying the parser to use.
+#' @param tag Optional character scalar containing the tag assigned to every
+#'   imported word. `NULL` leaves the tag empty.
+#'
+#' @return `NULL`, invisibly, after the worker has been updated.
+#' @noRd
+#' @keywords internal
+import_cidian_worker <- function(worker, path, format, tag) .Call(wrap__import_cidian_worker, worker, path, format, tag)
+
+#' Read an input-method dictionary through the internal native bridge.
+#'
+#' Internal bridge used by `read_cidian()` to parse a supported input-method
+#' dictionary and return its entries and coding components.
+#'
+#' @param path Character scalar containing the input-method dictionary path.
+#' @param format Character scalar identifying the parser to use.
+#'
+#' @return A named list with `entry` and `code` character vectors.
+#' @noRd
+#' @keywords internal
+read_cidian_worker <- function(path, format) .Call(wrap__read_cidian_worker, path, format)
 
 # nolint end

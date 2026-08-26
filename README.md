@@ -28,16 +28,13 @@ DeepWiki](https://deepwiki.com/badge.svg)](https://deepwiki.com/Yousa-Mirage/jie
 带来了现代化的性能与可维护性。
 
 多年前，[qinwf](https://github.com/qinwf) 基于 cppjieba 创建了
-[jiebaR](https://github.com/qinwf/jiebaR)，长期以来一直是 R
-语言中文分词的首选工具。然而，[qinwf](https://github.com/qinwf)
-已停止维护 [jiebaR](https://github.com/qinwf/jiebaR)，并且
-[jiebaR](https://github.com/qinwf/jiebaR) 已被
+jiebaR，长期以来一直是 R 语言中文分词的首选工具。然而，qinwf 已停止维护
+jiebaR，并且 jiebaR 已被
 [CRAN](https://CRAN.R-project.org/package=jiebaR) 移除，
 无法直接安装。这给 R
 语言的教学与研究带来了不便和困扰。因此，基于功能完善、性能出色、
-持续维护的 Rust [jieba-rs](https://github.com/messense/jieba-rs) crate，
-我开发了 **jiebaRS**，为 R 用户提供一个现代化、易用的中文分词工具，
-并尽可能保持与原 [jiebaR](https://github.com/qinwf/jiebaR) API
+持续维护的 Rust jieba-rs crate， 我开发了 **jiebaRS**，为 R
+用户提供一个现代化、易用的中文分词工具， 并尽可能保持与原 jiebaR API
 的兼容性。
 
 ## 安装
@@ -49,6 +46,10 @@ DeepWiki](https://deepwiki.com/badge.svg)](https://deepwiki.com/Yousa-Mirage/jie
 ``` r
 install.packages("jiebaRS")
 ```
+
+> 如果您使用 Linux，您可以尝试从
+> [P3M](https://packagemanager.posit.co/client/#/repos/cran/packages/jiebaRS/overview)
+> 为不同的 Linux 发行版安装预编译的二进制文件，避免从源代码编译。
 
 ### R-universe / R-multiverse
 
@@ -64,13 +65,10 @@ install.packages("jiebaRS", repos = "https://community.r-multiverse.org")
 
 ### 从源码安装
 
-使用 [pak](https://pak.r-lib.org/) 或
-[remotes](https://remotes.r-lib.org/) 从源码安装：
+使用 [pak](https://pak.r-lib.org/) 从源码安装：
 
 ``` r
 pak::pak("Yousa-Mirage/jiebaRS")
-# 或
-remotes::install_github("Yousa-Mirage/jiebaRS")
 ```
 
 > **注意：** 从源码构建需要 Rust 工具链来编译 Rust 后端。
@@ -217,10 +215,27 @@ cutter3 <- worker()
 segment("量子机器狗和超导量子比特", cutter3)
 #> [1] "量子" "机器" "狗"   "和"   "超导" "量子" "比特"
 
-new_user_word(cutter3, "量子机器狗", "n")
-add_word(cutter3, "超导量子比特", "n")  # 别名
+new_user_word(cutter3, "量子机器狗", tags = "n")
+add_word(cutter3, "超导量子比特", tags = "n")  # 别名
 segment("量子机器狗和超导量子比特", cutter3)
 #> [1] "量子机器狗"   "和"           "超导量子比特"
+```
+
+也可以直接导入输入法词库。支持 `.scel`、`.qcel`、`.qpyd`、`.bdict` 和
+`.bcd` 格式，函数会根据文件扩展名自动选择解析器。词库中的词会直接添加到
+现有 worker；默认不使用输入法词库中的编码和权重，也不设置词性标签。
+
+``` r
+cutter_cidian <- worker()
+import_cidian(cutter_cidian, "dictionary.scel")
+segment("词库中的词语", cutter_cidian)
+
+# 也可以为导入的词统一设置词性标签
+import_cidian(cutter_cidian, "dictionary.qcel", tag = "n")
+
+# 直接读取词库中的词和编码
+dictionary <- read_cidian("dictionary.scel")
+head(dictionary)
 ```
 
 ### 停用词
@@ -228,10 +243,18 @@ segment("量子机器狗和超导量子比特", cutter3)
 通过 `stop_word` 参数以字符向量形式提供停用词，或通过 `stop_word_file`
 参数 以文件路径形式提供。停用词会从分词和关键词提取结果中过滤掉。
 
+jiebaRS 内嵌了三份来自
+[Northriven/Stopwords](https://github.com/Northriven/Stopwords)
+的停用词表，可按需传给 `stop_word`：
+
+- `stopwords_cn`：汇总的中文停用词表
+- `stopwords_en`：常用的英文停用词表
+- `stopwords_full`：汇总的中英文停用词表
+
 ``` r
-cutter4 <- worker(stop_word = c("这是", "一个"))
-segment("这是一个测试", cutter4)
-#> [1] "测试"
+cutter4 <- worker(stop_word = stopwords_cn)
+segment("这是一个关于中文分词的测试", cutter4)
+#> [1] "这是" "中文" "分词" "测试"
 ```
 
 ### 自定义 IDF + `get_idf()`
@@ -312,8 +335,8 @@ jiebaRS 将主角名 “鸿渐” 合并为一个词，jiebaR 则切为 “鸿�
 | 《红楼梦》 | 单长文本    |         0.129 |        0.246 | 1.91x  |
 | 《红楼梦》 | 10 万句并行 |         0.639 |        4.601 | 7.20x  |
 
-单文本分词时 jiebaRS 约快 1.7~1.9 倍；当输入为大量短句并并行切分时，
-jiebaRS 可达 7~12 倍加速。
+单文本分词时 jiebaRS 约快 1.7 ~ 1.9 倍；当输入为大量短句并并行切分时，
+jiebaRS 可达 7 ~ 12 倍加速。
 
 ## 致谢
 
