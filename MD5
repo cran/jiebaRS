@@ -1,7 +1,7 @@
-01611d5a97cc6120c68a5c60ffad4f1e *DESCRIPTION
+70985574471603ef3bde7594585423a4 *DESCRIPTION
 3d2f80d9077925de0745d1b255a6e4e8 *LICENSE
 8078b42af87a4637390a167fe2a6d41d *NAMESPACE
-2030e96aa7f261ac63534ab57b1091b7 *NEWS.md
+234e32acaebd52a3aaa2bab201a91127 *NEWS.md
 a3da9f139adb992219b4095b66c7002c *R/cidian.R
 ea308c45f1d0c5ae4187a50f222b978f *R/extendr-wrappers.R
 6de334197cf61d7b9e7294c75f0330dd *R/filter.R
@@ -17,7 +17,7 @@ e60d3eddb94dbcbaac996d6e6423d2f9 *R/stopwords.R
 10190f854fbdea286ea763e224d323ba *R/textrank.R
 a54fc752baeaecd846945d87a16e1cb0 *R/user-dict.R
 1db7a32f3520e3a754da613c6791b00f *R/worker.R
-74f94a083cdb8c1f01a911b8565677fc *README.md
+879e4b4702d72b2159a06a2b656b4eeb *README.md
 df665c330920d29973e9723a009da3f1 *cleanup
 1ccd53fb149fad14e8715a24cc398251 *cleanup.win
 6dc963801a6a45ae7fcb5e9d7f4237d4 *configure
@@ -25,7 +25,7 @@ df665c330920d29973e9723a009da3f1 *cleanup
 9b96dd3be9bc8b53a28203a8b0a3ed23 *data/stopwords_cn.rda
 30d63d9c58a623f33a2217cde5c2dad6 *data/stopwords_en.rda
 78beed2c1084b929090d0301de664832 *data/stopwords_full.rda
-ec0b62babb6566867c9421ffee9535bd *inst/WORDLIST
+e82aac3d61c8e49cfd7a402ffd20db9e *inst/WORDLIST
 081fd136925c8f9760827f27ddf60e9a *man/count_ngrams.Rd
 60ce6b6033c0acd89473c1ab35d66221 *man/filter_segment.Rd
 4bb0b2eb2f8f9b27bb465e51c9f69399 *man/freq.Rd
@@ -47,8 +47,8 @@ ea3b41edc9bbe9a8f8ac8fbf44086a81 *man/textrank_df.Rd
 14a466c1c08500cc1f99807f2d8e0fb0 *src/Makevars.win.in
 62975ad92ff67177705d01a795c13ba2 *src/entrypoint.c
 2c79e4f7a588b6bfd49da3616b6b5ace *src/jiebaRS-win.def
-562d4c416f85bd8e723f09563e6e95c0 *src/rust/Cargo.lock
-3ddec61c319175740c845dff779ab8f6 *src/rust/Cargo.toml
+e65a515fb29ac96c9fa013edf2e2707f *src/rust/Cargo.lock
+1442a6089c9dd81be64de294b17c68ef *src/rust/Cargo.toml
 b51a9b5f22d28471fff697eebddd823d *src/rust/document.rs
 d1502134deaef46ec527e203d407b245 *src/rust/src/cidian.rs
 fa22c2f27c1a479f48d4c80e703c41bb *src/rust/src/file_reader.rs
@@ -59,7 +59,7 @@ d1436474811edbcf8605eb6e6761197d *src/rust/src/segment.rs
 b579f3edc475b2b087878fd9896eda96 *src/rust/src/user_dict.rs
 6e1af8b42b5693e273ac96d3c2b397dc *src/rust/src/worker.rs
 d4c7febd30951f7fbd584476dbb2dd70 *src/rust/vendor-config.toml
-8b52f6eb62ac2d3d6417591854f39e14 *src/rust/vendor.tar.xz
+150dfb458acd42f55c886bc8309c2383 *src/rust/vendor.tar.xz
 921438d53302a0b36528df8e59ccc8c6 *tests/spelling.R
 e778744d76a2d15a411ca3089d8818bf *tests/testthat.R
 9b3d350b955e2bf6ef2785462798b2df *tests/testthat/_snaps/cidian.md

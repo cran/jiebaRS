@@ -7,14 +7,14 @@
 
 <!-- badges: start -->
 
+[![CRAN
+status](https://www.r-pkg.org/badges/version/jiebaRS)](https://CRAN.R-project.org/package=jiebaRS)
+[![R-universe
+version](https://Yousa-Mirage.r-universe.dev/jiebaRS/badges/version)](https://Yousa-Mirage.r-universe.dev/jiebaRS)
 [![GitHub
 Stars](https://img.shields.io/github/stars/Yousa-Mirage/jiebaRS?style=social)](https://github.com/Yousa-Mirage/jiebaRS)
 [![License:
 MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
-[![Docs dev
-Version](https://img.shields.io/badge/docs-dev-blue.svg)](https://yousa-mirage.github.io/jiebaRS/)
-[![Ask
-DeepWiki](https://deepwiki.com/badge.svg)](https://deepwiki.com/Yousa-Mirage/jiebaRS)
 <!-- badges: end -->
 
 [简体中文](https://yousa-mirage.github.io/jiebaRS/index.html) \|
@@ -349,8 +349,6 @@ jiebaRS 构建于以下开源项目的基础之上：
 - **[extendr](https://github.com/extendr/extendr)**：extendr 团队让 Rust
   与 R 的互操作变得切实可行。
 - 更广泛的 **Rust** 与 **R** 社区。
-
-没有这些项目，jiebaRS 就不会存在。
 
 ## 许可证
 

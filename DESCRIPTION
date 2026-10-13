@@ -1,6 +1,6 @@
 Package: jiebaRS
 Title: Chinese Text Segmentation, POS Tagging, and Keyword Extraction
-Version: 0.3.0
+Version: 0.3.1
 Authors@R: 
     c(person(given = "Hao",
              family = "Cheng",
@@ -28,8 +28,8 @@ Config/testthat/parallel: true
 Language: en-US
 Config/roxygen2/version: 8.1.0
 NeedsCompilation: yes
-Packaged: 2026-08-26 11:17:04 UTC; Yousa-Mirage
+Packaged: 2026-10-13 10:25:33 UTC; yousa-mirage
 Author: Hao Cheng [aut, cre, cph]
 Maintainer: Hao Cheng <Yousa-Mirage@foxmail.com>
 Repository: CRAN
-Date/Publication: 2026-08-26 11:40:02 UTC
+Date/Publication: 2026-10-13 10:50:02 UTC
